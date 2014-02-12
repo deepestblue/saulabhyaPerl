@@ -45,8 +45,10 @@ foreach my $script (keys %scripts) {
     my ($test);
 
     for (1 .. $scripts{$script}) {
-        ok (! $tlor_fwd->transliterate("< test-cases/$script/$_.$script", "| cmp -s test-cases/$script/$_.Latin -"),
-            "$script → Latin: $_");
+        ok (
+            ! $tlor_fwd->transliterate("< test-cases/$script/$_.$script", "| cmp -s test-cases/$script/$_.Latin -"),
+            "$script → Latin: $_"
+            );
 
         open $test, "< test-cases/$script/$_.Latin" or die $!;
         binmode ($test, ':utf8');
@@ -58,8 +60,10 @@ foreach my $script (keys %scripts) {
 
             normalise ($normal_form, $test, $tmpfh);
 
-            ok (! $tlor_rev->transliterate("< ". $tmpfh->filename, "| cmp -s test-cases/$script/$_.$script -"),
-            "$normal_form Latin → $script: $_");
+            ok (
+                ! $tlor_rev->transliterate("< ". $tmpfh->filename, "| cmp -s test-cases/$script/$_.$script -"),
+                "$normal_form Latin → $script: $_"
+                );
 
             seek($test, 0, 0);
         }
