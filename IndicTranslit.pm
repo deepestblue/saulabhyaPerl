@@ -11,9 +11,6 @@
 
 # accept $'s instead of files
 
-# Grantha: encode Lw
-# Everything: encoding full-stop and double full-stop
-
 package IndicTranslit;
 
 use utf8;
