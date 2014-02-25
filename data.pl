@@ -290,6 +290,7 @@ $toLatinData =
     Tamil =>
     {
         INCONSONANTS => Set::IntSpan->new(hex('0b95') . '-' . hex('0bb9')),
+        INPLOSIVES   => Set::IntSpan->new(),
         INVOWELMARKS => Set::IntSpan->new(hex('0bbe') . '-' . hex('0bcd')),
         INVOWELS     => Set::IntSpan->new(hex('0b85') . '-' . hex('0b94')),
         INMODIFIERS  => Set::IntSpan->new(hex('0b83')),
@@ -329,6 +330,16 @@ $toLatinData =
     Grantha =>
     {
         INCONSONANTS => Set::IntSpan->new(hex('11315') . '-' . hex('11339')),
+        INPLOSIVES   => Set::IntSpan->new(hex('11315') . ',' .
+                                          hex('11317') . ',' .
+                                          hex('1131a') . ',' .
+                                          hex('1131c') . ',' .
+                                          hex('1131f') . ',' .
+                                          hex('11321') . ',' .
+                                          hex('11324') . ',' .
+                                          hex('11326') . ',' .
+                                          hex('1132a') . ',' .
+                                          hex('1132c')),
         INVOWELMARKS => Set::IntSpan->new(hex('1133c') . '-' . hex('1134d') . ',' .
                                           hex('11362') . '-' . hex('11363')),
         INVOWELS     => Set::IntSpan->new(hex('11304') . '-' . hex('11314') . ',' .
@@ -375,6 +386,16 @@ $toLatinData =
     Devanagari =>
     {
         INCONSONANTS => Set::IntSpan->new(hex('0915') . '-' . hex('0939')),
+        INPLOSIVES   => Set::IntSpan->new(hex('0915') . ',' .
+                                          hex('0917') . ',' .
+                                          hex('091a') . ',' .
+                                          hex('091c') . ',' .
+                                          hex('091f') . ',' .
+                                          hex('0921') . ',' .
+                                          hex('0924') . ',' .
+                                          hex('0926') . ',' .
+                                          hex('092a') . ',' .
+                                          hex('092c')),
         INVOWELMARKS => Set::IntSpan->new(hex('093c') . '-' . hex('094d') . ',' .
                                           hex('0962') . '-' . hex('0963')),
         INVOWELS     => Set::IntSpan->new(hex('0904') . '-' . hex('0914') . ',' .
@@ -421,6 +442,16 @@ $toLatinData =
     Telugu =>
     {
         INCONSONANTS => Set::IntSpan->new(hex('0c15') . '-' . hex('0c39')),
+        INPLOSIVES   => Set::IntSpan->new(hex('0c15') . ',' .
+                                          hex('0c17') . ',' .
+                                          hex('0c1a') . ',' .
+                                          hex('0c1c') . ',' .
+                                          hex('0c1f') . ',' .
+                                          hex('0c21') . ',' .
+                                          hex('0c24') . ',' .
+                                          hex('0c26') . ',' .
+                                          hex('0c2a') . ',' .
+                                          hex('0c2c')),
         INVOWELMARKS => Set::IntSpan->new(hex('0c3e') . '-' . hex('0c4d') . ',' .
                                           hex('0c62') . '-' . hex('0c63')),
         INVOWELS     => Set::IntSpan->new(hex('0c05') . '-' . hex('0c14') . ',' .

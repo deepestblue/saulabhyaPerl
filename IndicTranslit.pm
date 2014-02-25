@@ -4,11 +4,6 @@
 # Devanagari: Deal with Vedic anusvara once it comes out
 # Telugu: Deal with avagraha and vocalic l and r markers as they come out
 
-# ISO 15919 conformance - handle colon (ambiguity resolution e.g. b:ha)
-# Idea is to refactor the hash-map into a true data-structure. Then we
-# can have bit-flags for In_Consonants, (b, g, k, c, ...)
-# etc. Consider bitflags package
-
 # accept $'s instead of files
 
 package IndicTranslit;
@@ -184,17 +179,33 @@ sub fromLatin {
 sub toLatin {
     my ($self, $translit_map) = @_;
 
-    my $consonant = 0;
+    my $isConsonant = 0;
+    my $isPlosive = 0;
+    my $isHalfPlosive = 0;
+    my $isVowelA = 0;
 
     while (my $ch = getc INPUT) {
-        print OUTPUT 'a'
-            if ($consonant &&
-                ! (Set::IntSpan::member($$translit_map->{INVOWELMARKS}, ord($ch))));
-        $consonant = Set::IntSpan::member($$translit_map->{INCONSONANTS}, ord($ch));
+        my $isImplicitA = $isConsonant &&
+            ! (Set::IntSpan::member($$translit_map->{INVOWELMARKS}, ord($ch)));
+        print OUTPUT 'a' if $isImplicitA;
+
+        if (defined $$translit_map->{CHARMAP}{$ch}) {
+            print OUTPUT ':'
+                if $isHalfPlosive && $$translit_map->{CHARMAP}{$ch} eq 'h';
+            print OUTPUT ':'
+                if ($isImplicitA || $isVowelA) && ($$translit_map->{CHARMAP}{$ch} eq 'i' || $$translit_map->{CHARMAP}{$ch} eq 'u');
+        }
+
+        $isHalfPlosive = $isPlosive && defined $$translit_map->{CHARMAP}{$ch} && $$translit_map->{CHARMAP}{$ch} eq '';
+        $isPlosive = Set::IntSpan::member($$translit_map->{INPLOSIVES}, ord($ch));
+
+        $isVowelA = defined $$translit_map->{CHARMAP}{$ch} && $$translit_map->{CHARMAP}{$ch} eq 'a';
+        $isConsonant = Set::IntSpan::member($$translit_map->{INCONSONANTS}, ord($ch));
+
         print OUTPUT defined $$translit_map->{CHARMAP}{$ch} ? $$translit_map->{CHARMAP}{$ch} : $ch;
     }
 
-    print OUTPUT 'a' if ($consonant);
+    print OUTPUT 'a' if ($isConsonant);
 
     return;
 }
