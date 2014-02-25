@@ -2,7 +2,6 @@
 
 # TODO
 # Devanagari: Deal with Vedic anusvara once it comes out
-# Telugu: Deal with avagraha and vocalic l and r markers as they come out
 
 # accept $'s instead of files
 
