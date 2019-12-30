@@ -17,9 +17,7 @@ use File::Temp ();
 
 my %scripts = ( 'Tamil' => 2, 'Devanagari' => 3, 'Telugu' => 1 );
 
-my @todo_scripts = ( 'Kannada', 'TamilAccented' );
-
-# TamilAccented isn't going to happen with the current architecture
+my @todo_scripts = ( 'Kannada' );
 
 # For each todo-script and done-script, fwd and rev isa. For each
 # done-script, for each test-cases 3 (toLatin, NFD fromLatin, NFC
