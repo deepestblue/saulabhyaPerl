@@ -10,6 +10,8 @@ binmode(STDERR, ':utf8');
 
 use IndicTranslit;
 
+#IndicTranslit->debug(1);
+
 sub usage {
     return "Usage: $0 from-script to-script < input > output\n";
 }
