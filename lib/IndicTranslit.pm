@@ -14,7 +14,6 @@ use Unicode::Normalize qw(check normalize);
 use Carp;
 use Set::IntSpan;
 
-use FindBin;
 use File::Spec;
 
 my $Debugging = 0;
@@ -48,7 +47,7 @@ sub new {
     {
         $Debugging and carp "Eval'ing data ...";
 
-        my ($volume,$directories,$file) =
+        my ($volume, $directories, $dummy) =
                        File::Spec->splitpath(File::Spec->rel2abs(__FILE__));
         open DATA, '<:utf8', File::Spec->catdir($volume, $directories, 'data.pl') or croak $!;
         {
