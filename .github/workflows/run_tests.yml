@@ -12,8 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: List perl version
-      run: perl -V
     - name: Install dependencies
       run: cpan Set::IntSpan
     - name: Run tests
