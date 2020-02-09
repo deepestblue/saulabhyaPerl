@@ -1,7 +1,7 @@
-#!/usr/bin/perl
-
 use warnings;
 use strict;
+
+use lib 'lib';
 
 binmode(STDIN,  ':utf8');
 binmode(STDOUT, ':utf8');
@@ -15,6 +15,7 @@ use Unicode::Normalize qw(normalize);
 require File::Temp;
 use File::Temp ();
 
+# Map of script names to #cases for each script
 my %scripts = ( 'Tamil' => 2, 'Devanagari' => 3, 'Telugu' => 1 );
 
 my @todo_scripts = ( 'Kannada' );
@@ -22,7 +23,6 @@ my @todo_scripts = ( 'Kannada' );
 # For each todo-script and done-script, fwd and rev isa. For each
 # done-script, for each test-cases 3 (toLatin, NFD fromLatin, NFC
 # fromLatin). Plus package, throughLatin
-
 plan tests => 2 * keys(%scripts) + 3 * sum(values(%scripts)) + 2 * @todo_scripts + 2;
 
 use_ok('IndicTranslit');

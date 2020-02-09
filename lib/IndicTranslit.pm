@@ -14,6 +14,9 @@ use Unicode::Normalize qw(check normalize);
 use Carp;
 use Set::IntSpan;
 
+use FindBin;
+use File::Spec;
+
 my $Debugging = 0;
 
 my ($fromLatinData, $toLatinData);
@@ -45,7 +48,9 @@ sub new {
     {
         $Debugging and carp "Eval'ing data ...";
 
-        open DATA, '<:utf8', 'data.pl' or croak $!;
+        my ($volume,$directories,$file) =
+                       File::Spec->splitpath(File::Spec->rel2abs(__FILE__));
+        open DATA, '<:utf8', File::Spec->catdir($volume, $directories, 'data.pl') or croak $!;
         {
             # File-slurp mode
             local $/;

@@ -4,6 +4,8 @@ use warnings;
 use strict;
 use utf8;
 
+use lib 'lib';
+
 binmode(STDIN,  ':utf8');
 binmode(STDOUT, ':utf8');
 binmode(STDERR, ':utf8');
