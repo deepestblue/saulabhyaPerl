@@ -6,7 +6,7 @@
 package IndicTranslit;
 
 use utf8;
-use warnings;
+use warnings FATAL => 'all';
 use strict;
 use sigtrap;
 
@@ -49,7 +49,7 @@ sub new {
 
         my ($volume, $directories, $dummy) =
                        File::Spec->splitpath(File::Spec->rel2abs(__FILE__));
-        open DATA, '<:utf8', File::Spec->catdir($volume, $directories, 'data.pl') or croak $!;
+        open DATA, '<:encoding(UTF-8)', File::Spec->catdir($volume, $directories, 'data.pl') or croak $!;
         {
             # File-slurp mode
             local $/;
@@ -110,11 +110,11 @@ sub transliterate {
 
     local (*INPUT, *OUTPUT);
 
-    open INPUT,  "$inputfile"  or croak $!;
+    open INPUT, "$inputfile" or croak $!;
     open OUTPUT, "$outputfile" or croak $!;
 
-    binmode(INPUT, ':utf8');
-    binmode(OUTPUT, ':utf8');
+    binmode(INPUT, ':encoding(UTF-8)');
+    binmode(OUTPUT, ':encoding(UTF-8)');
 
     $self->{RUN}();
 
