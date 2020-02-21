@@ -28,6 +28,7 @@ sub debug {
     unless (@_ == 1) { confess 'usage: CLASSNAME->debug(level)' };
 
     $Debugging = shift;
+    return;
 }
 
 sub new {
@@ -86,6 +87,7 @@ sub new {
 sub DESTROY {
     my $self = shift;
     $Debugging and carp 'Destroying $self ' . $self;
+    return;
 }
 
 sub from_lang {
@@ -134,6 +136,7 @@ sub transliterate {
 sub todo {
     my ($self, $lang) = @_;
     $Debugging and carp "$lang ↔ Latin interconversion not implemented. Yet.\n";
+    return;
 }
 
 sub fromLatin {
@@ -158,19 +161,19 @@ sub fromLatin {
     while (<INPUT>) {
         $_ = normalize('NFD', $_);
         # Order of operations below is ultra-important
-        while (s/($misc)/$$translit_map->{MISC}{$1}/) {}
-        while (s/($modifiers)/$$translit_map->{MODIFIERS}{$1}/) {}
+        while (s/($misc)/$$translit_map->{MISC}{$1}/x) {}
+        while (s/($modifiers)/$$translit_map->{MODIFIERS}{$1}/x) {}
 
-        while (s/($plosives):/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{''}/) {}
-        while (s/a:(i|u)/a$$translit_map->{VOWELS}{$1}/) {}
+        while (s/($plosives):/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{''}/x) {}
+        while (s/a:(i|u)/a$$translit_map->{VOWELS}{$1}/x) {}
 
-        while (s/($consonants)($vowels1)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{$2}/) {}
-        while (s/($vowels1)/$$translit_map->{VOWELS}{$1}/) {}
+        while (s/($consonants)($vowels1)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{$2}/x) {}
+        while (s/($vowels1)/$$translit_map->{VOWELS}{$1}/x) {}
 
-        while (s/($consonants)($vowels2)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{$2}/) {}
-        while (s/($vowels2)/$$translit_map->{VOWELS}{$1}/) {}
+        while (s/($consonants)($vowels2)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{$2}/x) {}
+        while (s/($vowels2)/$$translit_map->{VOWELS}{$1}/x) {}
 
-        while (s/($consonants)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{''}/) {}
+        while (s/($consonants)/$$translit_map->{CONSONANTS}{$1}$$translit_map->{VOWELMARKS}{''}/x) {}
         print OUTPUT;
     }
 
