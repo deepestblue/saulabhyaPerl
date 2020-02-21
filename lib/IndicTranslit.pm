@@ -13,7 +13,6 @@ use sigtrap;
 use Unicode::Normalize qw(check normalize);
 use Carp;
 use Set::IntSpan;
-
 use File::Spec;
 
 my $Debugging = 0;
@@ -53,7 +52,7 @@ sub new {
         open DATA, '<:encoding(UTF-8)', File::Spec->catdir($volume, $directories, 'data.pl') or croak $!;
         {
             # File-slurp mode
-            local $/;
+            local $/ = undef;
 
             eval <DATA>;
             carp $@ if $@;
@@ -120,12 +119,12 @@ sub transliterate {
 
     $self->{RUN}();
 
-    $? = 0;
+    local $? = 0;
     close INPUT or $! and croak $!;
     $Debugging and $? and carp "$?";
     $ret += $?;
 
-    $? = 0;
+    local $? = 0;
     close OUTPUT or $! and croak $!;
     $Debugging and $? and carp "$?";
     $ret += $?;
@@ -149,14 +148,14 @@ sub fromLatin {
     # Reverse sorted order to ensure reverse prefix order (because of
     # greedy matching later)
 
-    $vowels1 = join('|', map quotemeta, grep { ! $$translit_map->{DIPHTHONG_CONSTITUENTS}{$_} } reverse sort keys %{$$translit_map->{VOWELS}});
-    $vowels2 = join('|', map quotemeta, reverse sort keys %{$$translit_map->{DIPHTHONG_CONSTITUENTS}});
+    $vowels1 = join('|', map { quotemeta } grep { ! $$translit_map->{DIPHTHONG_CONSTITUENTS}{$_} } reverse sort keys %{$$translit_map->{VOWELS}});
+    $vowels2 = join('|', map { quotemeta } reverse sort keys %{$$translit_map->{DIPHTHONG_CONSTITUENTS}});
 
-    $consonants = join('|', map quotemeta, reverse sort keys %{$$translit_map->{CONSONANTS}});
-    $plosives = join('|', map quotemeta, reverse sort keys %{$$translit_map->{PLOSIVES}});
+    $consonants = join('|', map { quotemeta } reverse sort keys %{$$translit_map->{CONSONANTS}});
+    $plosives = join('|', map { quotemeta } reverse sort keys %{$$translit_map->{PLOSIVES}});
 
-    $modifiers = join('|', map quotemeta, reverse sort keys %{$$translit_map->{MODIFIERS}});
-    $misc = join('|', map quotemeta, reverse sort keys %{$$translit_map->{MISC}});
+    $modifiers = join('|', map { quotemeta } reverse sort keys %{$$translit_map->{MODIFIERS}});
+    $misc = join('|', map { quotemeta } reverse sort keys %{$$translit_map->{MISC}});
 
     while (<INPUT>) {
         $_ = normalize('NFD', $_);
