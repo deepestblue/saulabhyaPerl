@@ -27,18 +27,18 @@ my @todo_scripts = ( 'Kannada' );
 # fromLatin). Plus package, throughLatin
 plan tests => 2 * keys(%scripts) + 3 * sum(values(%scripts)) + 2 * @todo_scripts + 2;
 
-use_ok('IndicTranslit');
+use_ok('SaulabhyaPerl');
 
-#IndicTranslit->debug(1);
+#SaulabhyaPerl->debug(1);
 
 my ($tlor_fwd, $tlor_rev);
 
 foreach my $script (keys %scripts) {
-    $tlor_fwd = IndicTranslit->new($script, 'Latin');
-    isa_ok ($tlor_fwd, 'IndicTranslit', "new $script → Latin");
+    $tlor_fwd = SaulabhyaPerl->new($script, 'Latin');
+    isa_ok ($tlor_fwd, 'SaulabhyaPerl', "new $script → Latin");
 
-    $tlor_rev = IndicTranslit->new('Latin', $script);
-    isa_ok ($tlor_rev, 'IndicTranslit', "new Latin → $script");
+    $tlor_rev = SaulabhyaPerl->new('Latin', $script);
+    isa_ok ($tlor_rev, 'SaulabhyaPerl', "new Latin → $script");
 
     # transliterate return value is backwards
 
@@ -84,15 +84,15 @@ TODO: {
     foreach my $script (@todo_scripts) {
         local $TODO = "$script not implemented";
 
-        $tlor_fwd = IndicTranslit->new($script, 'Latin');
-        isa_ok ($tlor_fwd, 'IndicTranslit', "new $script->Latin");
+        $tlor_fwd = SaulabhyaPerl->new($script, 'Latin');
+        isa_ok ($tlor_fwd, 'SaulabhyaPerl', "new $script->Latin");
 
-        $tlor_rev = IndicTranslit->new('Latin', $script);
-        isa_ok ($tlor_rev, 'IndicTranslit', "new Latin->$script");
+        $tlor_rev = SaulabhyaPerl->new('Latin', $script);
+        isa_ok ($tlor_rev, 'SaulabhyaPerl', "new Latin->$script");
     }
 }
 
-my $tlor = IndicTranslit->new('Tamil', 'Devanagari');
+my $tlor = SaulabhyaPerl->new('Tamil', 'Devanagari');
 ok (! defined($tlor), 'Tamil->Devanagari needs to go through Latin');
 
 sub normalise {

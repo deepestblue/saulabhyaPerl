@@ -3,7 +3,7 @@
 
 # accept $'s instead of files
 
-package IndicTranslit;
+package SaulabhyaPerl;
 
 use utf8;
 use warnings FATAL => 'all';
