@@ -1,18 +1,20 @@
 name: CI
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     container:
       image: perl:latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: cpan Set::IntSpan
-    - name: Run tests
-      run: prove
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: cpan Set::IntSpan
+
+      - name: Run tests
+        run: prove
