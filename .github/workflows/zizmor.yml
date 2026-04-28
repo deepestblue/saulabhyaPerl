@@ -7,8 +7,8 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  actions: read
-  contents: read
+  actions: read # needed by zizmor-action online audits.
+  contents: read # needed to read checked-out workflow files.
 
 jobs:
   zizmor:
